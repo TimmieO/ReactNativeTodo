@@ -4,6 +4,9 @@ import { StyleSheet, Text, Button, View, ScrollView, FlatList, Keyboard, Pressab
 import AllTask from './AllTask';
 import SearchedTask from './SearchedTask';
 
+/*TODO-
+  REMOVED SEARCHEDTASK IF THINGS START MESSING UP, PUT IT BACK
+*/
 
 const windowWidth = Dimensions.get('window').width;
 const windowHeight = Dimensions.get('window').height;
@@ -20,7 +23,7 @@ export default function DisplayTask({doSearch, handleModule, removeTask, searche
         <FlatList
           data={searchedTask}
           renderItem={({item}) => (
-            <SearchedTask item={item} removeTask={removeTask} handleModule={handleModule}/>
+            <AllTask item={item} removeTask={removeTask} handleModule={handleModule}/>
           )}
         />
         :

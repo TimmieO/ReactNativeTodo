@@ -53,12 +53,15 @@ import SectionHeader from './components/SectionHeader';
   Fixa register laddas vid logout
   Lägg till säkerhets check på edit på alla färger, så den koppplar rätt, om man inte väljer ny
   Fixa hamburgar meny
+  Flytta + för lägga till kort
+  Fixa ansiktsikon för profil
+  Fixa i SectionHeader.js
+
 */
 
 /*TODO-
   -FÖRST-
-
-  Fixa i SectionHeader.js
+  Fíxa i AllTask.js
 
   -SENARE-
   Fixa snyggare kod
@@ -66,8 +69,8 @@ import SectionHeader from './components/SectionHeader';
   Fixa så att alla funktioner ligger snyggare
   Fixa så att data man skickar från modulerna skickas i objekt, så det blir lättare
   Fixa en Auth komponent
-  Fixa ansiktsikon för profil
-  Flytta + för lägga till kort
+  Fixa stylen på alla komponenter
+  Fixa settings modul (Dark mode, och andra hjälp för döva, blinda etc )
 
   -SIST-
   Fixa prata för att lägga till text
@@ -144,7 +147,7 @@ export default function App() {
       })
     }).then((res) => res.json())
       .then(result=>{
-        displayScreen.login ? setDisplayScreen(displayScreen => ({...displayScreen, login: false})) : [setDisplayScreen(displayScreen => ({...displayScreen, login: true})), setDisplayScreen(displayScreen => ({...displayScreen, register: false}))]
+        display.login ? setDisplay(display => ({...display, login: false})) : [setDisplay(display => ({...display, login: true})), setDisplay(display => ({...display, register: false}))]
       })
   }
   const loginUser = async(loginData) => {

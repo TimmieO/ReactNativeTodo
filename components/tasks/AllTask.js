@@ -4,6 +4,8 @@ import Icon from 'react-native-vector-icons/FontAwesome';
 import FIcon from 'react-native-vector-icons/Feather';
 
 /*TODO-
+  Fixa så man får nya ikoner (Ta bort, cancel, done etc) när man håller in på kort
+
   Fixa något sätt att checka av de task man gjort och ha dem i någon sorts "Done" lista
   Fixa så man kan sätta timer
   Fixa möjlighet att flytta på alla task

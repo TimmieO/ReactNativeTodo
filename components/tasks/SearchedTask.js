@@ -8,7 +8,6 @@ import FIcon from 'react-native-vector-icons/Feather';
   Fixa så man kan sätta timer
   Fixa möjlighet att flytta på alla task
   Fixa att man får olika ikoner (Ta bort, cancel och move) när man håller in, istället för att ta bort direkt
-
  */
 
 export default function SearchedTask({item, removeTask, handleModule}) {

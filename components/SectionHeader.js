@@ -45,7 +45,6 @@ export default function SectionHeader({handleModule, searchTask,performSearch,ca
       </View>
       <View style={styles.newCardIconContainer}>
         <Text style={styles.newCardText}>New Card <FIcon name="plus-circle" style={styles.newCardIcon} onPress={()=> {handleModule('create')}}/></Text>
-
       </View>
     </SafeAreaView >
   );
