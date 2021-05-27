@@ -4,6 +4,7 @@ import { StyleSheet, Text, View, ScrollView, FlatList, Pressable, Keyboard, Safe
 import CreateTaskModule from './components/modules/CreateTaskModule';
 import EditTaskModule from './components/modules/EditTaskModule';
 import ProfileModule from './components/modules/ProfileModule';
+import TaskInfoModule from './components/modules/TaskInfoModule';
 
 import Loading from './components/screens/Loading';
 import deviceStorage from './services/deviceStorage';
@@ -92,7 +93,7 @@ export default function App() {
 
   const [display, setDisplay] = useState({login: true, register: false, dropDown: false});
   const [displayDropDown, setDisplayDropDown] = useState(false);
-  const [moduleOpen, setModuleOpen] = useState({create:false, edit: false, profile: false});
+  const [moduleOpen, setModuleOpen] = useState({create:false, edit: false, profile: false, taskInfo: false});
 
   const [loadingTasks, setLoadingTasks] = useState();
 
@@ -117,7 +118,7 @@ export default function App() {
   const [taskList, setTaskList] = useState([]);
   const [doSearch, setDoSearch] = useState(false);
   const [searchedTask, setSearchedTask] = useState([]);
-  const [editingTask, setEditingTask] = useState([]);
+  const [selectedTask, setSelectedTask] = useState([]);
 
   //Stateless component, have to use useEffect
   useEffect(() => {
@@ -125,7 +126,6 @@ export default function App() {
     checkLoggedIn('token');
 
   }, [])
-
 
   /*-Functions-*/
 
@@ -165,7 +165,7 @@ export default function App() {
       .then(result=>{
         if(result.auth == true){
           deviceStorage.saveItem("token", result.token);
-          setDisplayScreen(displayScreen => ({...displayScreen, login: false}));
+          setDisplay(display => ({...display, login: false}));
           setLoggedIn(true);
         }
         if(result.auth == false){
@@ -237,10 +237,10 @@ export default function App() {
   }
   const editTask = async(key, title, bgColor, titleColor) => {
     if(bgColor == undefined){
-      bgColor = editingTask.bgColor;
+      bgColor = selectedTask.bgColor;
     }
     if(titleColor == undefined){
-      titleColor = editingTask.titleColor
+      titleColor = selectedTask.titleColor
     }
     await fetch("http://192.168.10.198:5000/updateTask", {
       method: 'post',
@@ -309,16 +309,23 @@ export default function App() {
 
   //Change state for displays
   const moduleStateHandler = (action, task) => {
+    console.log("hey");
     if(action == 'create'){
       moduleOpen.create ? setModuleOpen(moduleOpen => ({...moduleOpen, create: false})): setModuleOpen(moduleOpen => ({...moduleOpen, create: true}))
     }
     if(action == 'edit'){
-      setEditingTask(task);
+      setSelectedTask(task);
       moduleOpen.edit ? setModuleOpen(moduleOpen => ({...moduleOpen, edit: false})): setModuleOpen(moduleOpen => ({...moduleOpen, edit: true}))
+    }
+    if(action == 'taskInfo'){
+      setSelectedTask(task);
+      moduleOpen.taskInfo ? setModuleOpen(moduleOpen => ({...moduleOpen, taskInfo: false})) : setModuleOpen(moduleOpen => ({...moduleOpen, taskInfo: true}))
+      console.log("hey");
     }
     if(action == 'profile'){
       moduleOpen.profile ? setModuleOpen(moduleOpen => ({...moduleOpen, profile: false})) : setModuleOpen(moduleOpen => ({...moduleOpen, profile: true}))
     }
+
     if(action == 'showLogin'){
       display.login ? setDisplay(display => ({...display, login: false})) : [setDisplay(display => ({...display, login: true})), setDisplay(display => ({...display, register: false}))]
     }
@@ -336,8 +343,10 @@ export default function App() {
       <Pressable onPress={Keyboard.dismiss} accessible={false}>
 
         {moduleOpen.create ? <CreateTaskModule addTask={addTask} handleModule={moduleStateHandler} key={"createModule"}/> : !<CreateTaskModule/>}
-        {moduleOpen.edit ? <EditTaskModule editTask={editTask} task={editingTask} handleModule={moduleStateHandler} key={"editModule"}/> : !<EditTaskModule/>}
+        {moduleOpen.edit ? <EditTaskModule editTask={editTask} task={selectedTask} handleModule={moduleStateHandler} key={"editModule"}/> : !<EditTaskModule/>}
         {moduleOpen.profile ? <ProfileModule userInfo={user} logOut={logOut} handleModule={moduleStateHandler} key={"profileModule"}/> : !<EditTaskModule/>}
+        {moduleOpen.taskInfo ? <TaskInfoModule item={selectedTask} handleModule={moduleStateHandler} key={"taskInfoModule"}/> : !<TaskInfoModule/>}
+
 
         <View style={styles.taskWrapper}>
           {loggedIn ?

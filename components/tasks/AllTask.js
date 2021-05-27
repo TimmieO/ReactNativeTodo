@@ -16,7 +16,7 @@ import FIcon from 'react-native-vector-icons/Feather';
 export default function AllTask({item, removeTask, handleModule}) {
 
   return (
-    <TouchableOpacity style={[styles.item, {backgroundColor: item.bgColor}]} onLongPress={() => removeTask(item.key)}>
+    <TouchableOpacity style={[styles.item, {backgroundColor: item.bgColor}]} onPress={() => handleModule('taskInfo', item)} onLongPress={() => removeTask(item.key)}>
       <Text style={[styles.itemText, {color: item.titleColor}]}>{item.text}</Text>
       <Pressable onPress={()=> handleModule('edit', item)}>
         <FIcon name="more-vertical" style={styles.taskOptionIcon} />
